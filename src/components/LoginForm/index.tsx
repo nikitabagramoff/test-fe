@@ -1,8 +1,14 @@
 import React, {ChangeEvent, useState} from 'react';
 import { Button, TextField } from '@material-ui/core';
+import { AxiosError } from 'axios';
 import { isValidEmail, isValidPassword } from '../../utils/validators';
-import AuthAPI from '../../api/AuthAPI';
+import AuthAPI, {ErrorField} from '../../api/AuthAPI';
 import './styles.css';
+
+enum Field {
+  Email = 'email',
+  Password = 'password'
+}
 
 function LoginForm() {
   const [email, setEmail] = useState<string>('');
@@ -37,6 +43,21 @@ function LoginForm() {
       setRequestError(false);
       alert(response.message);
     } catch (e) {
+      const errors: ErrorField[] = (e as AxiosError).response?.data.errors || [];
+
+      errors.forEach(error => {
+        switch (error.field) {
+          case Field.Email: {
+            setEmailError(true);
+            break;
+          }
+          case Field.Password: {
+            setPasswordError(true);
+            break;
+          }
+        }
+      });
+
       setRequestError(true);
     }
   };
