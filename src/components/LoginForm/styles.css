@@ -1,0 +1,24 @@
+.login-form__container {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    justify-content: space-around;
+    height: 280px;
+    position: relative;
+    align-items: center;
+}
+
+.login-form__input {
+    width: 100%;
+}
+
+.login-form__button {
+    margin-top: 30px;
+}
+
+.login-form__error {
+    align-self: center;
+    bottom: 0;
+    position: absolute;
+    color: red;
+}
